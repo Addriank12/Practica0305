@@ -16,7 +16,7 @@ import modelo.Jugador;
  */
 public class ControladorJugador {
     private final JugadorServicio jugadorServicio = new JugadorServicio();
-    private ControladorEquipo controladorEquipo = new ControladorEquipo();
+    private static ControladorEquipo controladorEquipo = new ControladorEquipo();
     public Jugador crear(String[] params){
         Jugador jugador = new Jugador(Integer.valueOf(params[6]),params[0], params[1], Integer.valueOf(params[2]), params[3], Integer.valueOf(params[4]),params[5],controladorEquipo.listar().get(Integer.valueOf(params[7])));
         this.jugadorServicio.crear(jugador);

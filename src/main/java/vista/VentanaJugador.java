@@ -69,6 +69,11 @@ public class VentanaJugador extends javax.swing.JInternalFrame {
         jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         jLabel3.setText("Dorsal:");
 
@@ -342,6 +347,11 @@ public class VentanaJugador extends javax.swing.JInternalFrame {
         jTextField6.setText(jugador.getCedula()); 
         jComboBox1.setSelectedIndex(controladorEquipo.buscarPosicion(jugador.getEquipo()));   
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        updateTable();
+    }//GEN-LAST:event_formComponentShown
 
     private void updateTable()
     {

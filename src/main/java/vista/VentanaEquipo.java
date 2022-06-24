@@ -59,6 +59,11 @@ public class VentanaEquipo extends javax.swing.JInternalFrame {
         jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         jLabel1.setText("Nombre:");
 
@@ -267,6 +272,11 @@ public class VentanaEquipo extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, "Eliminado correctamente", "", JOptionPane.INFORMATION_MESSAGE);
         updateTable();
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        updateTable();
+    }//GEN-LAST:event_formComponentShown
 
     /**
      * @param args the command line arguments

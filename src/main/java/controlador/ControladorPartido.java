@@ -17,7 +17,7 @@ import modelo.Partido;
  */
 public class ControladorPartido {
     private final PartidoServicio partidoServicio = new PartidoServicio();
-    private ControladorEquipo controladorEquipo = new ControladorEquipo();
+    private static ControladorEquipo controladorEquipo = new ControladorEquipo();
     //controladorEquipo.listar().get(Integer.valueOf(params[7])
     public Partido crear(String[] params){
         var fechaStrings = params[3].split("/");
