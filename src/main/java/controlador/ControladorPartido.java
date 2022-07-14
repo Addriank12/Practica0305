@@ -20,14 +20,20 @@ public class ControladorPartido {
     private static ControladorEquipo controladorEquipo = new ControladorEquipo();
     //controladorEquipo.listar().get(Integer.valueOf(params[7])
     public Partido crear(String[] params){
-        var fechaStrings = params[3].split("/");
-        Date fecha = new Date(Integer.parseInt(fechaStrings[0]),Integer.parseInt(fechaStrings[1]) , Integer.parseInt(fechaStrings[2]));       
+        Date fecha;
+        try {
+             var fechaStrings = params[3].split("/");
+             fecha = new Date(Integer.parseInt(fechaStrings[0]),Integer.parseInt(fechaStrings[1]) , Integer.parseInt(fechaStrings[2]));   
+        } catch (Exception e) {
+            throw new RuntimeException("Fecha Invalida");
+        }
+           
         Partido partido = new Partido(Integer.valueOf(params[6]),fecha, Integer.valueOf(params[0]), params[1], params[2], controladorEquipo.listar().get(Integer.valueOf(params[4])), controladorEquipo.listar().get(Integer.valueOf(params[5])));
         this.partidoServicio.crear(partido);
         return partido;
     }
     
-    public Partido buscarBarco(String arg){
+    public Partido buscarPartido(String arg){
         return this.partidoServicio.buscarPorCodigo(Integer.valueOf(arg));
     }
     

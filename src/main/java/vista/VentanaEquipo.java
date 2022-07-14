@@ -232,20 +232,30 @@ public class VentanaEquipo extends javax.swing.JInternalFrame {
             args[5] = jTextField3.getText();
             controladorEquipo.crear(args);
             JOptionPane.showMessageDialog(this, "Guardado correctamente", "", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al guardar", "", JOptionPane.ERROR_MESSAGE);
+        }
+        catch (NumberFormatException e) {            
+            JOptionPane.showMessageDialog(this, "Se ingreso un texto en un campo númerico", "", JOptionPane.ERROR_MESSAGE);
+        }
+        catch (RuntimeException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
         }
         
-        updateTable();
-        
+        updateTable();        
     }//GEN-LAST:event_jButton2ActionPerformed
 
+
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        Equipo equipo = controladorEquipo.buscarEquipo(jTextField3.getText());
-        jTextField1.setText(equipo.getNombre());
-        jTextField2.setText(String.valueOf(equipo.getnJugadores()));
-        jTextField4.setText(equipo.getPropietario());
-        jTextField5.setText(String.valueOf(equipo.getGastos()));           
+        try {
+            Equipo equipo = controladorEquipo.buscarEquipo(jTextField3.getText());
+            jTextField1.setText(equipo.getNombre());
+            jTextField2.setText(String.valueOf(equipo.getnJugadores()));
+            jTextField4.setText(equipo.getPropietario());
+            jTextField5.setText(String.valueOf(equipo.getGastos()));           
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(this, "No se encontró el equipo", "", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -259,18 +269,26 @@ public class VentanaEquipo extends javax.swing.JInternalFrame {
             args[5] = jTextField3.getText();
             controladorEquipo.modificar(args);
             JOptionPane.showMessageDialog(this, "Modificado correctamente", "", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-           JOptionPane.showMessageDialog(this, "Error al modificar", "", JOptionPane.ERROR_MESSAGE); 
         }
-       
+        catch (NumberFormatException e) {            
+            JOptionPane.showMessageDialog(this, "Se ingreso un texto en un campo númerico", "", JOptionPane.ERROR_MESSAGE);
+        }
+        catch (RuntimeException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+        }       
         updateTable();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        controladorEquipo.eliminar(jTextField3.getText());
-        JOptionPane.showMessageDialog(this, "Eliminado correctamente", "", JOptionPane.INFORMATION_MESSAGE);
-        updateTable();
+        if(JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar este equipo?") == 0)
+        {
+            controladorEquipo.eliminar(jTextField3.getText());
+            JOptionPane.showMessageDialog(this, "Eliminado correctamente", "", JOptionPane.INFORMATION_MESSAGE);
+            updateTable();
+        }
+     
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown

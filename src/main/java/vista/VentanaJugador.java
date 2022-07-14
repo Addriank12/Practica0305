@@ -284,8 +284,13 @@ public class VentanaJugador extends javax.swing.JInternalFrame {
             controladorJugador.crear(args);
             updateTable();
             JOptionPane.showMessageDialog(this, "Guardado correctamente", "", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al guardar. " + e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+        }
+        catch (NumberFormatException e) {            
+            JOptionPane.showMessageDialog(this, "Se ingreso un texto en un campo númerico", "", JOptionPane.ERROR_MESSAGE);
+        }
+        catch (RuntimeException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -318,15 +323,20 @@ public class VentanaJugador extends javax.swing.JInternalFrame {
             controladorJugador.modificar(args);
             updateTable();
             JOptionPane.showMessageDialog(this, "Modificado correctamente", "", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al modificar", "", JOptionPane.ERROR_MESSAGE);
         }
-        
-        
+        catch (NumberFormatException e) {            
+            JOptionPane.showMessageDialog(this, "Se ingreso un texto en un campo númerico", "", JOptionPane.ERROR_MESSAGE);
+        }
+        catch (RuntimeException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+        }       
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        if(JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar este jugador?") == 0)
+        {
         try {            
             controladorJugador.eliminar(jTextField7.getText());
             JOptionPane.showMessageDialog(this, "Eliminado correctamente", "", JOptionPane.INFORMATION_MESSAGE);
@@ -334,10 +344,13 @@ public class VentanaJugador extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al eliminar", "", JOptionPane.ERROR_MESSAGE);
         }
+        }
+
         
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
         Jugador jugador = controladorJugador.buscarJugador(jTextField7.getText());
         jTextField1.setText(jugador.getNombre());
         jTextField2.setText(jugador.getNacionalidad());        
@@ -345,7 +358,10 @@ public class VentanaJugador extends javax.swing.JInternalFrame {
         jTextField4.setText(jugador.getPosicion());   
         jTextField5.setText(String.valueOf(jugador.getEdad()));
         jTextField6.setText(jugador.getCedula()); 
-        jComboBox1.setSelectedIndex(controladorEquipo.buscarPosicion(jugador.getEquipo()));   
+        jComboBox1.setSelectedIndex(controladorEquipo.buscarPosicion(jugador.getEquipo()));         
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(this, "No se encontró el jugador", "", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown

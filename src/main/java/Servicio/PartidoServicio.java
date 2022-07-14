@@ -22,8 +22,19 @@ public class PartidoServicio implements IPartido
 
     @Override
     public Partido crear(Partido partido) {
-        this.listPartido.add(partido);
-        return partido;
+         if (partido.getVisitante()== partido.getLocal())
+            {
+                throw new RuntimeException("El equipo local y visitante no pueden ser iguales");
+            }  
+        if (exist(partido.getCodigo()) == false)
+        {
+            this.listPartido.add(partido);
+            return partido;
+        }
+        else{
+            throw new RuntimeException("Ya existe un partido con ese código");
+        }
+        
     }
 
     @Override
@@ -32,8 +43,10 @@ public class PartidoServicio implements IPartido
     }
     
       @Override
-    public Partido modificar(int codigoJugador, Partido partidoNuevo) {
-      var posicion=this.buscarPosicion(this.buscarPorCodigo(codigoJugador));
+    public Partido modificar(int codigoPartido, Partido partidoNuevo) {
+        if (exist(codigoPartido) == true)
+        {
+        var posicion=this.buscarPosicion(this.buscarPorCodigo(codigoPartido));
         this.listar().get(posicion).setArbitro(partidoNuevo.getArbitro());
         this.listar().get(posicion).setFecha(partidoNuevo.getFecha());
         this.listar().get(posicion).setDuracion(partidoNuevo.getDuracion());
@@ -41,27 +54,38 @@ public class PartidoServicio implements IPartido
         this.listar().get(posicion).setSede(partidoNuevo.getSede());
         this.listar().get(posicion).setVisitante(partidoNuevo.getVisitante());
         return partidoNuevo;
-
+        }
+        else
+        {
+            throw new RuntimeException("No se ha encontrado un jugador con ese código");
+        }
     }
 
     @Override
     public Partido eliminar(int codigoPartido) {
+        if (exist(codigoPartido) == true)
+        {
         Partido partido=this.buscarPorCodigo(codigoPartido);
         var posicion=this.buscarPosicion(partido);
         this.listar().remove(posicion);
         return partido;
+        }
+        else
+        {
+            throw new RuntimeException("No se ha encontrado un jugador con ese código");
+        }
     }
 
     @Override
     public Partido buscarPorCodigo(int codigoPartido) {
-        Partido jugador=null;
+        Partido partido=null;
         for(var b:this.listPartido){
             if(codigoPartido==b.getCodigo()){
-                jugador=b;
+                partido=b;
                 break;
             }
         }
-        return jugador;
+        return partido;
     }
 
     @Override
@@ -74,5 +98,19 @@ public class PartidoServicio implements IPartido
             }
         }
         return posicion;
+    }
+    
+    private boolean exist(int codigo)
+    {
+        boolean result = false;
+        for (Partido e : listPartido)
+        {
+            if (e.getCodigo() == codigo)
+            {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 }

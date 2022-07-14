@@ -149,7 +149,7 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         if (controladorEquipo.count() == 0 )
         {
-            JOptionPane.showMessageDialog(this, "Ingrese almenos un equipo", "", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Debe tener almenos 2 equipos", "", JOptionPane.WARNING_MESSAGE);
         }
         else
         {

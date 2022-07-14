@@ -11,6 +11,8 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Equipo;
+import modelo.Jugador;
+import modelo.Partido;
 
 /**
  *
@@ -259,6 +261,7 @@ public class VentanaPartido extends javax.swing.JInternalFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         try {
+           
             String[] args = new String[7];
             args[0] = jTextField2.getText();
             args[1] = jTextField3.getText();
@@ -270,9 +273,15 @@ public class VentanaPartido extends javax.swing.JInternalFrame {
             controladorPartido.crear(args);
             updateTable();
             JOptionPane.showMessageDialog(this, "Guardado correctamente", "", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al guardar", "", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException e) {            
+            JOptionPane.showMessageDialog(this, "Se ingreso un texto en un campo númerico", "", JOptionPane.ERROR_MESSAGE);
         }
+        catch (RuntimeException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+        }
+      
+
         
        
        
@@ -316,13 +325,31 @@ public class VentanaPartido extends javax.swing.JInternalFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        try {
+            Partido partido = controladorPartido.buscarPartido(jTextField6.getText());
+            jTextField1.setText(partido.getFecha().toString());
+            jTextField2.setText(String.valueOf(partido.getDuracion()));        
+            jTextField3.setText(partido.getSede());
+            jTextField4.setText(partido.getArbitro());               
+            jComboBox1.setSelectedIndex(controladorEquipo.buscarPosicion(partido.getLocal()));
+            jComboBox2.setSelectedIndex(controladorEquipo.buscarPosicion(partido.getVisitante()));
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(this, "No se encontró el partido", "", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        controladorJugador.eliminar(jTextField6.getText());
-        JOptionPane.showMessageDialog(this, "Eliminado correctamente", "", JOptionPane.INFORMATION_MESSAGE);
-        updateTable();
+        if(JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar este jugador?") == 0)
+        {
+            try {
+               controladorJugador.eliminar(jTextField6.getText());
+               JOptionPane.showMessageDialog(this, "Eliminado correctamente", "", JOptionPane.INFORMATION_MESSAGE);
+               updateTable();
+            } catch (Exception e) {
+            }
+        }
+        
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -337,8 +364,12 @@ public class VentanaPartido extends javax.swing.JInternalFrame {
             args[6] = jTextField6.getText();
             controladorPartido.modificar(args);            
             JOptionPane.showMessageDialog(this, "Modificado correctamente", "", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al modificar", "", JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException e) {            
+            JOptionPane.showMessageDialog(this, "Se ingreso un texto en un campo númerico", "", JOptionPane.ERROR_MESSAGE);
+        }
+        catch (RuntimeException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
         }
 
         updateTable();
