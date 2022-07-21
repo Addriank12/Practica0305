@@ -297,14 +297,18 @@ public class VentanaJugador extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
  
+        updateCombo();
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void updateCombo()
+    {
         this.jComboBox1.removeAllItems();
         for(int i = 0; i<this.controladorEquipo.listar().size();i++)
         {
            this.jComboBox1.addItem(this.controladorEquipo.listar().get(i).getNombre());
         }
-
-    }//GEN-LAST:event_jButton3ActionPerformed
-
+    }
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -351,6 +355,7 @@ public class VentanaJugador extends javax.swing.JInternalFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         try {
+        updateCombo();
         Jugador jugador = controladorJugador.buscarJugador(jTextField7.getText());
         jTextField1.setText(jugador.getNombre());
         jTextField2.setText(jugador.getNacionalidad());        

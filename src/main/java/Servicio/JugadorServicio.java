@@ -4,8 +4,20 @@
  */
 package Servicio;
 
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.Equipo;
 import modelo.Jugador;
 
@@ -15,62 +27,132 @@ import modelo.Jugador;
  */
 public class JugadorServicio implements IJugador {
     private List<Jugador> listJugador;
+    private String folder;
     
-    public JugadorServicio()
+    public JugadorServicio() throws IOException
     {
+        folder = "C:/Equipo";
         listJugador= new ArrayList<>();
+        listJugador = listar();
+
     }
 
     @Override
     public Jugador crear(Jugador jugador) 
     {
-        if (exist(jugador.getCodigo()) == false)
+        try {
+            if (exist(jugador.getCodigo()) == false)
+            {
+                String path = folder + "/Jugador.txt";
+                ObjectOutputStream archivo = null;
+                try {
+                    archivo = new ObjectOutputStream(new FileOutputStream(path,true));
+                    archivo.writeObject(jugador);
+                    archivo.close();
+                } catch (IOException e) {
+                    archivo.close();
+                }
+                this.listJugador = listar();
+                return jugador;
+            }
+            else
+            {
+                throw new RuntimeException("Ya existe un jugador con este código.");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(EquipoServicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (RuntimeException e)
         {
-            this.listJugador.add(jugador);
-            return jugador;
-        }   
-        else{
-            throw new RuntimeException("Ya existe un jugador con ese código");
-        }        
+            throw new RuntimeException("Ya existe un jugador con este código.");
+        }
+        return jugador;        
     }
 
     @Override
-    public List<Jugador> listar() {
-        return this.listJugador;
+    public List<Jugador> listar() throws IOException{
+        String path = folder + "/Jugador.txt";  
+        if (new File(path).exists() == true)
+        {
+           var computadorList = new ArrayList<Jugador>();        
+        FileInputStream file = new FileInputStream(path);
+        ObjectInputStream archivo = null;
+        try{
+            while(file.available()>0)
+            {
+                archivo = new ObjectInputStream(file);
+                Jugador computador = (Jugador) archivo.readObject(); 
+                computadorList.add(computador);
+            }    
+            if (archivo != null) archivo.close();            
+            file.close();
+        }catch(IOException e){
+            archivo.close();
+            file.close();
+        } catch (ClassNotFoundException ex) {        
+            Logger.getLogger(EquipoServicio.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        return computadorList; 
+        }
+        else{
+            return null;
+        }
     }
 
   @Override
-    public Jugador modificar(int codigoJugador, Jugador jugadorNuevo) {
+    public Jugador modificar(int codigoJugador, Jugador jugadorNuevo) throws IOException{
+        
         if (exist(codigoJugador) == true)
         {
+            
+            var jugadores = listar();         
             var posicion=this.buscarPosicion(this.buscarPorCodigo(codigoJugador));
-            this.listar().get(posicion).setCedula(jugadorNuevo.getCedula());
-            this.listar().get(posicion).setNacionalidad(jugadorNuevo.getNacionalidad());
-            this.listar().get(posicion).setEdad(jugadorNuevo.getEdad());
-            this.listar().get(posicion).setDorsal(jugadorNuevo.getDorsal());        
-            this.listar().get(posicion).setNombre(jugadorNuevo.getNombre());
-            this.listar().get(posicion).setPosicion(jugadorNuevo.getPosicion());
-            return jugadorNuevo;
+            jugadores.get(posicion).setCedula(jugadorNuevo.getCedula());
+            jugadores.get(posicion).setNacionalidad(jugadorNuevo.getNacionalidad());
+            jugadores.get(posicion).setEdad(jugadorNuevo.getEdad());
+            jugadores.get(posicion).setDorsal(jugadorNuevo.getDorsal());        
+            jugadores.get(posicion).setNombre(jugadorNuevo.getNombre());
+            jugadores.get(posicion).setPosicion(jugadorNuevo.getPosicion());            
+            listJugador = jugadores;
+            replaceFile();
+            return jugadorNuevo;            
         }
         else
         {
-            throw new RuntimeException("No se ha encontrado un jugador con ese código");
-        }
+            throw new RuntimeException("No se ha encontrado un equipo con ese código");
+        }      
 
+    }
+    
+       public void replaceFile() throws IOException
+    {
+        String file_name = folder + "/Jugador.txt";
+        Path path = Paths.get(file_name);
+        try {
+            Files.delete(path);
+            for (int i = 0; i < listJugador.size(); i++)
+            {
+            crear(listJugador.get(i));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        listJugador = listar();        
     }
 
     @Override
-    public Jugador eliminar(int codigoJugador) {
+    public Jugador eliminar(int codigoJugador) throws IOException{
         if (exist(codigoJugador) == true)
         {
-        Jugador jugador=this.buscarPorCodigo(codigoJugador);
-        var posicion=this.buscarPosicion(jugador);
-        this.listar().remove(posicion);
-        return jugador;
+        Jugador equipo=this.buscarPorCodigo(codigoJugador);
+        var posicion=this.buscarPosicion(equipo);        
+        listJugador.remove(posicion);
+            replaceFile();
+        return equipo;
         }
         else
         {
-            throw new RuntimeException("No se ha encontrado un jugador con ese código");
+            throw new RuntimeException("No se ha encontrado un equipo con ese código");
         }
     }
 
@@ -98,16 +180,18 @@ public class JugadorServicio implements IJugador {
         return posicion;
     }
     
-    private boolean exist(int codigo)
+    private boolean exist(int codigo) throws IOException
     {
+        var a = listar();
+        if (a == null) return false;
         boolean result = false;
-        for (Jugador e : listJugador)
+        for (Jugador e : a)
         {
             if (e.getCodigo() == codigo)
             {
                 result = true;
-                break;
-            }
+                break; 
+            }            
         }
         return result;
     }

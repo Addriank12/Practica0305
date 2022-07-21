@@ -232,16 +232,15 @@ public class VentanaEquipo extends javax.swing.JInternalFrame {
             args[5] = jTextField3.getText();
             controladorEquipo.crear(args);
             JOptionPane.showMessageDialog(this, "Guardado correctamente", "", JOptionPane.INFORMATION_MESSAGE);
+            updateTable();
         }
-        catch (NumberFormatException e) {            
+        catch (NumberFormatException e) {      
             JOptionPane.showMessageDialog(this, "Se ingreso un texto en un campo númerico", "", JOptionPane.ERROR_MESSAGE);
         }
         catch (RuntimeException e)
         {
             JOptionPane.showMessageDialog(this, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
-        }
-        
-        updateTable();        
+        }      
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
@@ -255,7 +254,6 @@ public class VentanaEquipo extends javax.swing.JInternalFrame {
         } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(this, "No se encontró el equipo", "", JOptionPane.ERROR_MESSAGE);
         }
-        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -269,15 +267,15 @@ public class VentanaEquipo extends javax.swing.JInternalFrame {
             args[5] = jTextField3.getText();
             controladorEquipo.modificar(args);
             JOptionPane.showMessageDialog(this, "Modificado correctamente", "", JOptionPane.INFORMATION_MESSAGE);
+            updateTable();
         }
-        catch (NumberFormatException e) {            
+        catch (NumberFormatException e) {    
             JOptionPane.showMessageDialog(this, "Se ingreso un texto en un campo númerico", "", JOptionPane.ERROR_MESSAGE);
         }
         catch (RuntimeException e)
         {
             JOptionPane.showMessageDialog(this, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
-        }       
-        updateTable();
+        }        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -331,14 +329,12 @@ public class VentanaEquipo extends javax.swing.JInternalFrame {
             }
         });
     }
-    
- 
-    
+        
     private void updateTable()
     {
-        var header = new String[] {"Codigo", "Nombre", "N. Jugadores", "confederacion", "Propietario","gastos"};
-        var data = new Object[this.controladorEquipo.listar().size()][6];
-        
+        try {
+            var header = new String[] {"Codigo", "Nombre", "N. Jugadores", "confederacion", "Propietario","gastos"};
+        var data = new Object[this.controladorEquipo.listar().size()][6];        
         for(int i = 0; i<this.controladorEquipo.listar().size();i++)
         {
             data[i][0]=this.controladorEquipo.listar().get(i).getCodigo();
@@ -349,7 +345,12 @@ public class VentanaEquipo extends javax.swing.JInternalFrame {
             data[i][5]=this.controladorEquipo.listar().get(i).getGastos();
         }
         var dataModel = new DefaultTableModel(data,header);
-        this.jTable1.setModel(dataModel);                
+        this.jTable1.setModel(dataModel);    
+        } catch (NullPointerException e) {
+            DefaultTableModel modelo = (DefaultTableModel)jTable1.getModel();
+            modelo.removeRow(0);
+        }
+                    
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

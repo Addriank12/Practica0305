@@ -4,6 +4,7 @@
  */
 package Servicio;
 
+import java.io.IOException;
 import java.util.List;
 import modelo.Equipo;
 
@@ -13,11 +14,10 @@ import modelo.Equipo;
  */
 public interface IEquipo {
     public Equipo crear(Equipo equipo);
-    public List<Equipo> listar();
-    public Equipo modificar(int codigoEquipo, Equipo equipoNuevo);
-    public Equipo eliminar(int codigoEquipo);
+    public List<Equipo> listar() throws IOException;
+    public Equipo modificar(int codigoEquipo, Equipo equipoNuevo) throws IOException;
+    public Equipo eliminar(int codigoEquipo) throws IOException;
     public Equipo buscarPorCodigo(int codigoEquipo);
     public int buscarPosicion(Equipo equipo);
-    public int count();
-    
+    public int count();   
 }

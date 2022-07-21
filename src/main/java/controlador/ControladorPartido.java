@@ -19,6 +19,7 @@ public class ControladorPartido {
     private final PartidoServicio partidoServicio = new PartidoServicio();
     private static ControladorEquipo controladorEquipo = new ControladorEquipo();
     //controladorEquipo.listar().get(Integer.valueOf(params[7])
+    
     public Partido crear(String[] params){
         Date fecha;
         try {

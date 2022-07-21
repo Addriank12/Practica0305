@@ -4,13 +4,14 @@
  */
 package modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author Adrian
  */
-public class Partido
+public class Partido implements Serializable
 {
     private int codigo;
     private Date fecha;

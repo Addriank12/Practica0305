@@ -4,6 +4,7 @@
  */
 package Servicio;
 
+import java.io.IOException;
 import java.util.List;
 import modelo.Partido;
 
@@ -13,9 +14,9 @@ import modelo.Partido;
  */
 public interface IPartido {
     public Partido crear(Partido partido);
-    public List<Partido> listar();
-      public Partido modificar(int codigoBarco, Partido barcoNuevo);
-    public Partido eliminar(int codigoBarco);
+    public List<Partido> listar() throws IOException;
+    public Partido modificar(int codigoBarco, Partido barcoNuevo) throws IOException;
+    public Partido eliminar(int codigoBarco) throws IOException;
     public Partido buscarPorCodigo(int codigoBarco);
     public int buscarPosicion(Partido barco);
 }

@@ -4,6 +4,7 @@
  */
 package Servicio;
 
+import java.io.IOException;
 import java.util.List;
 import modelo.Jugador;
 
@@ -13,9 +14,9 @@ import modelo.Jugador;
  */
 public interface IJugador {
     public Jugador crear(Jugador jugador);
-    public List<Jugador> listar();
-    public Jugador modificar(int codigoBarco, Jugador barcoNuevo);
-    public Jugador eliminar(int codigoBarco);
+    public List<Jugador> listar() throws IOException;
+    public Jugador modificar(int codigoBarco, Jugador barcoNuevo) throws IOException;
+    public Jugador eliminar(int codigoBarco) throws IOException;
     public Jugador buscarPorCodigo(int codigoBarco);
     public int buscarPosicion(Jugador barco);
 }

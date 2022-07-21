@@ -4,11 +4,13 @@
  */
 package modelo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Adrian
  */
-public class Jugador {
+public class Jugador implements Serializable{
     private int codigo;
     private String nombre;
     private String nacionalidad;
