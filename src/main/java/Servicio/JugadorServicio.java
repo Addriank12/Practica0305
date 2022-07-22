@@ -74,25 +74,25 @@ public class JugadorServicio implements IJugador {
         String path = folder + "/Jugador.txt";  
         if (new File(path).exists() == true)
         {
-           var computadorList = new ArrayList<Jugador>();        
-        FileInputStream file = new FileInputStream(path);
-        ObjectInputStream archivo = null;
-        try{
-            while(file.available()>0)
-            {
-                archivo = new ObjectInputStream(file);
-                Jugador computador = (Jugador) archivo.readObject(); 
-                computadorList.add(computador);
-            }    
-            if (archivo != null) archivo.close();            
-            file.close();
-        }catch(IOException e){
-            archivo.close();
-            file.close();
-        } catch (ClassNotFoundException ex) {        
-            Logger.getLogger(EquipoServicio.class.getName()).log(Level.SEVERE, null, ex);
+            var jugadorList = new ArrayList<Jugador>();        
+            FileInputStream file = new FileInputStream(path);
+            ObjectInputStream archivo = null;
+            try{
+                while(file.available()>0)
+                {
+                    archivo = new ObjectInputStream(file);
+                    Jugador computador = (Jugador) archivo.readObject(); 
+                    jugadorList.add(computador);
+                }    
+                if (archivo != null) archivo.close();            
+                file.close();
+            }catch(IOException e){
+                archivo.close();
+                file.close();
+            } catch (ClassNotFoundException ex) {        
+                Logger.getLogger(EquipoServicio.class.getName()).log(Level.SEVERE, null, ex);
         }        
-        return computadorList; 
+        return jugadorList; 
         }
         else{
             return null;

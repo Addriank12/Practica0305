@@ -19,5 +19,5 @@ public interface IEquipo {
     public Equipo eliminar(int codigoEquipo) throws IOException;
     public Equipo buscarPorCodigo(int codigoEquipo);
     public int buscarPosicion(Equipo equipo);
-    public int count();   
+    public int count() throws IOException;   
 }

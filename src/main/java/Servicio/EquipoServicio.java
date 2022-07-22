@@ -54,14 +54,14 @@ public class EquipoServicio implements IEquipo {
             }
             else
             {
-                throw new RuntimeException("Ya existe un equipo con este código.");
+                throw new RuntimeException("Equipo duplicado.");
             }
         } catch (IOException ex) {
             Logger.getLogger(EquipoServicio.class.getName()).log(Level.SEVERE, null, ex);
         }
         catch (RuntimeException e)
         {
-            throw new RuntimeException("Ya existe un equipo con este código.");
+            throw new RuntimeException("Equipo duplicado.");
         }
         return equipo;
     }
@@ -176,13 +176,13 @@ public class EquipoServicio implements IEquipo {
     }
 
     @Override
-    public int count() {
+    public int count() throws IOException {
         if (listEquipo == null)
         {
             return 0;
         }
         else{
-        return listEquipo.size();
+            return listar().size();
         }
     }
     

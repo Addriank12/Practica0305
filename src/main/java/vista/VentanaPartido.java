@@ -260,8 +260,7 @@ public class VentanaPartido extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        try {
-           
+        try {           
             String[] args = new String[7];
             args[0] = jTextField2.getText();
             args[1] = jTextField3.getText();
@@ -280,29 +279,29 @@ public class VentanaPartido extends javax.swing.JInternalFrame {
         {
             JOptionPane.showMessageDialog(this, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
         }
-      
-
-        
-       
-       
     }//GEN-LAST:event_jButton2ActionPerformed
  private void updateTable()
     {
-        var header = new String[] {"Codigo", "Fecha", "Duracion", "Sede", "Arbitro","Local", "Visistante"};
-        var data = new Object[this.controladorPartido.listar().size()][7];
-        
-        for(int i = 0; i<this.controladorPartido.listar().size();i++)
-        {
-            data[i][0]=this.controladorPartido.listar().get(i).getCodigo();
-            data[i][1]=this.controladorPartido.listar().get(i).getFecha();
-            data[i][2]=this.controladorPartido.listar().get(i).getDuracion();
-            data[i][3]=this.controladorPartido.listar().get(i).getSede();
-            data[i][4]=this.controladorPartido.listar().get(i).getArbitro();
-            data[i][5]=this.controladorPartido.listar().get(i).getLocal().getNombre();
-            data[i][6]=this.controladorPartido.listar().get(i).getVisitante().getNombre();                     
-        }
-        var dataModel = new DefaultTableModel(data,header);
-        this.jTable1.setModel(dataModel);                
+        try {
+            
+            var header = new String[] {"Codigo", "Fecha", "Duracion", "Sede", "Arbitro","Local", "Visistante"};
+            var data = new Object[this.controladorPartido.listar().size()][7];        
+            for(int i = 0; i<this.controladorPartido.listar().size();i++)
+            {
+                data[i][0]=this.controladorPartido.listar().get(i).getCodigo();
+                data[i][1]=this.controladorPartido.listar().get(i).getFecha();
+                data[i][2]=this.controladorPartido.listar().get(i).getDuracion();
+                data[i][3]=this.controladorPartido.listar().get(i).getSede();
+                data[i][4]=this.controladorPartido.listar().get(i).getArbitro();
+                data[i][5]=this.controladorPartido.listar().get(i).getLocal().getNombre();
+                data[i][6]=this.controladorPartido.listar().get(i).getVisitante().getNombre();                     
+            }
+            var dataModel = new DefaultTableModel(data,header);
+            this.jTable1.setModel(dataModel);
+        } catch (NullPointerException e) {
+            DefaultTableModel modelo = (DefaultTableModel)jTable1.getModel();
+            modelo.removeRow(0);
+        }                        
     }
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:

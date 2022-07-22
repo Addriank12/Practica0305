@@ -376,22 +376,26 @@ public class VentanaJugador extends javax.swing.JInternalFrame {
 
     private void updateTable()
     {
-        var header = new String[] {"Codigo", "Nombre", "nacionalidad", "dorsal", "posicion","Edad", "Cedula", "Equipo"};
-        var data = new Object[this.controladorJugador.listar().size()][8];
-        
-        for(int i = 0; i<this.controladorJugador.listar().size();i++)
-        {
-            data[i][0]=this.controladorJugador.listar().get(i).getCodigo();
-            data[i][1]=this.controladorJugador.listar().get(i).getNombre();
-            data[i][2]=this.controladorJugador.listar().get(i).getNacionalidad();
-            data[i][3]=this.controladorJugador.listar().get(i).getDorsal();
-            data[i][4]=this.controladorJugador.listar().get(i).getPosicion();
-            data[i][5]=this.controladorJugador.listar().get(i).getEdad();
-            data[i][6]=this.controladorJugador.listar().get(i).getCedula();
-            data[i][7]=this.controladorJugador.listar().get(i).getEquipo().getNombre();
-        }
-        var dataModel = new DefaultTableModel(data,header);
-        this.jTable1.setModel(dataModel);                
+        try {
+            var header = new String[] {"Codigo", "Nombre", "nacionalidad", "dorsal", "posicion","Edad", "Cedula", "Equipo"};
+            var data = new Object[this.controladorJugador.listar().size()][8];        
+            for(int i = 0; i<this.controladorJugador.listar().size();i++)
+            {
+                data[i][0]=this.controladorJugador.listar().get(i).getCodigo();
+                data[i][1]=this.controladorJugador.listar().get(i).getNombre();
+                data[i][2]=this.controladorJugador.listar().get(i).getNacionalidad();
+                data[i][3]=this.controladorJugador.listar().get(i).getDorsal();
+                data[i][4]=this.controladorJugador.listar().get(i).getPosicion();
+                data[i][5]=this.controladorJugador.listar().get(i).getEdad();
+                data[i][6]=this.controladorJugador.listar().get(i).getCedula();
+                data[i][7]=this.controladorJugador.listar().get(i).getEquipo().getNombre();
+            }
+            var dataModel = new DefaultTableModel(data,header);
+            this.jTable1.setModel(dataModel); 
+        } catch (NullPointerException e) {
+            DefaultTableModel modelo = (DefaultTableModel)jTable1.getModel();
+            modelo.removeRow(0);
+        }                       
     }
     /**
      * @param args the command line arguments
