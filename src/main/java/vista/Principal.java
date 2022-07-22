@@ -5,6 +5,9 @@
 package vista;
 
 import controlador.ControladorEquipo;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
@@ -129,37 +132,45 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        if (controladorEquipo.count() == 0 )
-        {
-            JOptionPane.showMessageDialog(this, "Ingrese almenos un equipo", "", JOptionPane.WARNING_MESSAGE);
-        }
-        else
-        {
-            var ventanaJugador = new VentanaJugador();
-            ventanaJugador.setIconifiable(true);
-            ventanaJugador.setResizable(true);
-            ventanaJugador.setClosable(true);
-            this.jDesktopPane1.add(ventanaJugador);
-            ventanaJugador.setVisible(true);
-            ventanaJugador.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
+        try {
+            if (controladorEquipo.count() == 0 )
+            {
+                JOptionPane.showMessageDialog(this, "Ingrese almenos un equipo", "", JOptionPane.WARNING_MESSAGE);
+            }
+            else
+            {
+                var ventanaJugador = new VentanaJugador();
+                ventanaJugador.setIconifiable(true);
+                ventanaJugador.setResizable(true);
+                ventanaJugador.setClosable(true);
+                this.jDesktopPane1.add(ventanaJugador);
+                ventanaJugador.setVisible(true);
+                ventanaJugador.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        if (controladorEquipo.count() < 2)
-        {
-            JOptionPane.showMessageDialog(this, "Debe tener almenos 2 equipos", "", JOptionPane.WARNING_MESSAGE);
-        }
-        else
-        {
-            var ventanaPartido = new VentanaPartido();
-            ventanaPartido.setIconifiable(true);
-            ventanaPartido.setResizable(true);
-            ventanaPartido.setClosable(true);
-            this.jDesktopPane1.add(ventanaPartido);
-            ventanaPartido.setVisible(true);
-            ventanaPartido.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
+        try {
+            if (controladorEquipo.count() < 2)
+            {
+                JOptionPane.showMessageDialog(this, "Debe tener almenos 2 equipos", "", JOptionPane.WARNING_MESSAGE);
+            }
+            else
+            {
+                var ventanaPartido = new VentanaPartido();
+                ventanaPartido.setIconifiable(true);
+                ventanaPartido.setResizable(true);
+                ventanaPartido.setClosable(true);
+                this.jDesktopPane1.add(ventanaPartido);
+                ventanaPartido.setVisible(true);
+                ventanaPartido.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 

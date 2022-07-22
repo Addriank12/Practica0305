@@ -13,7 +13,7 @@ import modelo.Partido;
  * @author Adrian
  */
 public interface IPartido {
-    public Partido crear(Partido partido);
+    public Partido crear(Partido partido, boolean rl);
     public List<Partido> listar() throws IOException;
     public Partido modificar(int codigoBarco, Partido barcoNuevo) throws IOException;
     public Partido eliminar(int codigoBarco) throws IOException;

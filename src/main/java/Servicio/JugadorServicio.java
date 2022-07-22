@@ -38,7 +38,7 @@ public class JugadorServicio implements IJugador {
     }
 
     @Override
-    public Jugador crear(Jugador jugador) 
+    public Jugador crear(Jugador jugador, boolean rl) 
     {
         try {
             if (exist(jugador.getCodigo()) == false)
@@ -52,7 +52,7 @@ public class JugadorServicio implements IJugador {
                 } catch (IOException e) {
                     archivo.close();
                 }
-                this.listJugador = listar();
+                if (rl == true) this.listJugador = listar();
                 return jugador;
             }
             else
@@ -132,7 +132,7 @@ public class JugadorServicio implements IJugador {
             Files.delete(path);
             for (int i = 0; i < listJugador.size(); i++)
             {
-            crear(listJugador.get(i));
+            crear(listJugador.get(i), false);
             }
         } catch (IOException e) {
             e.printStackTrace();

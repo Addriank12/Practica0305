@@ -13,7 +13,7 @@ import modelo.Equipo;
  * @author Adrian
  */
 public interface IEquipo {
-    public Equipo crear(Equipo equipo);
+    public Equipo crear(Equipo equipo, boolean rl);
     public List<Equipo> listar() throws IOException;
     public Equipo modificar(int codigoEquipo, Equipo equipoNuevo) throws IOException;
     public Equipo eliminar(int codigoEquipo) throws IOException;

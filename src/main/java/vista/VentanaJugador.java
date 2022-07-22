@@ -6,6 +6,9 @@ package vista;
 
 import controlador.ControladorEquipo;
 import controlador.ControladorJugador;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -25,8 +28,13 @@ public class VentanaJugador extends javax.swing.JInternalFrame {
      */
     public VentanaJugador() {
         initComponents();
-        controladorJugador = new ControladorJugador();
-        controladorEquipo = new ControladorEquipo();
+        try {
+            controladorJugador = new ControladorJugador();
+             controladorEquipo = new ControladorEquipo();
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaJugador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
     }
 
     public ControladorEquipo getControladorEquipo() {
@@ -291,17 +299,23 @@ public class VentanaJugador extends javax.swing.JInternalFrame {
         catch (RuntimeException e)
         {
             JOptionPane.showMessageDialog(this, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaJugador.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
  
-        updateCombo();
+        try {
+            updateCombo();
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaJugador.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void updateCombo()
+    private void updateCombo() throws IOException
     {
         this.jComboBox1.removeAllItems();
         for(int i = 0; i<this.controladorEquipo.listar().size();i++)
@@ -334,6 +348,8 @@ public class VentanaJugador extends javax.swing.JInternalFrame {
         catch (RuntimeException e)
         {
             JOptionPane.showMessageDialog(this, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaJugador.class.getName()).log(Level.SEVERE, null, ex);
         }       
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -366,15 +382,21 @@ public class VentanaJugador extends javax.swing.JInternalFrame {
         jComboBox1.setSelectedIndex(controladorEquipo.buscarPosicion(jugador.getEquipo()));         
         } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(this, "No se encontró el jugador", "", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaJugador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        // TODO add your handling code here:
-        updateTable();
+        try {
+            // TODO add your handling code here:
+            updateTable();
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaJugador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_formComponentShown
 
-    private void updateTable()
+    private void updateTable() throws IOException
     {
         try {
             var header = new String[] {"Codigo", "Nombre", "nacionalidad", "dorsal", "posicion","Edad", "Cedula", "Equipo"};

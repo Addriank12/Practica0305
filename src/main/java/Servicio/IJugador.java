@@ -13,7 +13,7 @@ import modelo.Jugador;
  * @author Adrian
  */
 public interface IJugador {
-    public Jugador crear(Jugador jugador);
+    public Jugador crear(Jugador jugador, boolean rl);
     public List<Jugador> listar() throws IOException;
     public Jugador modificar(int codigoBarco, Jugador barcoNuevo) throws IOException;
     public Jugador eliminar(int codigoBarco) throws IOException;

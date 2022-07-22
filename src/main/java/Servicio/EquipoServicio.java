@@ -36,7 +36,7 @@ public class EquipoServicio implements IEquipo {
         listEquipo = listar();        
     }
     @Override
-    public Equipo crear(Equipo equipo) {
+    public Equipo crear(Equipo equipo, boolean rl) {
         try {
             if (exist(equipo.getCodigo(), equipo.getNombre()) == false)
             {
@@ -49,7 +49,7 @@ public class EquipoServicio implements IEquipo {
                 } catch (IOException e) {
                     archivo.close();
                 }
-                this.listEquipo = listar();
+                if (rl == true) this.listEquipo = listar();
                 return equipo;
             }
             else
@@ -127,7 +127,7 @@ public class EquipoServicio implements IEquipo {
             Files.delete(path);
             for (int i = 0; i < listEquipo.size(); i++)
             {
-            crear(listEquipo.get(i));
+            crear(listEquipo.get(i), false);
             }
         } catch (IOException e) {
             e.printStackTrace();

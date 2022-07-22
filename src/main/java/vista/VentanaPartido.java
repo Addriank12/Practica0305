@@ -7,7 +7,10 @@ package vista;
 import controlador.ControladorEquipo;
 import controlador.ControladorJugador;
 import controlador.ControladorPartido;
+import java.io.IOException;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Equipo;
@@ -27,9 +30,14 @@ public class VentanaPartido extends javax.swing.JInternalFrame {
      */
     public VentanaPartido() {
         initComponents();
-        controladorJugador = new ControladorJugador();
-        controladorEquipo = new ControladorEquipo();
+        try {
+            controladorJugador = new ControladorJugador();
+            controladorEquipo = new ControladorEquipo();
         controladorPartido = new ControladorPartido();
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaPartido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
    
     /**
@@ -278,9 +286,11 @@ public class VentanaPartido extends javax.swing.JInternalFrame {
         catch (RuntimeException e)
         {
             JOptionPane.showMessageDialog(this, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaPartido.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
- private void updateTable()
+ private void updateTable() throws IOException
     {
         try {
             
@@ -308,14 +318,19 @@ public class VentanaPartido extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-
+    try {
         this.jComboBox1.removeAllItems();
         this.jComboBox2.removeAllItems();
         for(int i = 0; i<this.controladorEquipo.listar().size();i++)
         {
             this.jComboBox1.addItem(this.controladorEquipo.listar().get(i).getNombre());
-            this.jComboBox2.addItem(this.controladorEquipo.listar().get(i).getNombre());
+           
+                this.jComboBox2.addItem(this.controladorEquipo.listar().get(i).getNombre());
+          
         }
+          } catch (IOException ex) {
+                Logger.getLogger(VentanaPartido.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
@@ -369,14 +384,24 @@ public class VentanaPartido extends javax.swing.JInternalFrame {
         catch (RuntimeException e)
         {
             JOptionPane.showMessageDialog(this, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaPartido.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        updateTable();
+        try {
+            updateTable();
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaPartido.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        // TODO add your handling code here:
-        updateTable();
+        try {
+            // TODO add your handling code here:
+            updateTable();
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaPartido.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_formComponentShown
 
     /**

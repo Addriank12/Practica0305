@@ -37,7 +37,7 @@ public class PartidoServicio implements IPartido
     }
 
     @Override
-    public Partido crear(Partido partido) {
+    public Partido crear(Partido partido, boolean rl) {
          try {
             if (exist(partido.getCodigo()) == false)
             {
@@ -50,7 +50,7 @@ public class PartidoServicio implements IPartido
                 } catch (IOException e) {
                     archivo.close();
                 }
-                this.listPartido = listar();
+                if (rl == true) this.listPartido = listar();
                 return partido;
             }
             else
@@ -128,7 +128,7 @@ public class PartidoServicio implements IPartido
             Files.delete(path);
             for (int i = 0; i < listPartido.size(); i++)
             {
-            crear(listPartido.get(i));
+            crear(listPartido.get(i), false);
             }
         } catch (IOException e) {
             e.printStackTrace();

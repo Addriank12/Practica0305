@@ -5,6 +5,9 @@
 package vista;
 
 import controlador.ControladorEquipo;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Equipo;
@@ -240,6 +243,8 @@ public class VentanaEquipo extends javax.swing.JInternalFrame {
         catch (RuntimeException e)
         {
             JOptionPane.showMessageDialog(this, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaEquipo.class.getName()).log(Level.SEVERE, null, ex);
         }      
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -275,6 +280,8 @@ public class VentanaEquipo extends javax.swing.JInternalFrame {
         catch (RuntimeException e)
         {
             JOptionPane.showMessageDialog(this, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaEquipo.class.getName()).log(Level.SEVERE, null, ex);
         }        
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -282,16 +289,24 @@ public class VentanaEquipo extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         if(JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar este equipo?") == 0)
         {
-            controladorEquipo.eliminar(jTextField3.getText());
-            JOptionPane.showMessageDialog(this, "Eliminado correctamente", "", JOptionPane.INFORMATION_MESSAGE);
-            updateTable();
+            try {
+                controladorEquipo.eliminar(jTextField3.getText());
+                JOptionPane.showMessageDialog(this, "Eliminado correctamente", "", JOptionPane.INFORMATION_MESSAGE);
+                updateTable();
+            } catch (IOException ex) {
+                Logger.getLogger(VentanaEquipo.class.getName()).log(Level.SEVERE, null, ex);
+            }            
         }
      
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        // TODO add your handling code here:
-        updateTable();
+        try {
+            // TODO add your handling code here:
+            updateTable();
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaEquipo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_formComponentShown
 
     /**
@@ -330,7 +345,7 @@ public class VentanaEquipo extends javax.swing.JInternalFrame {
         });
     }
         
-    private void updateTable()
+    private void updateTable() throws IOException
     {
         try {
             var header = new String[] {"Codigo", "Nombre", "N. Jugadores", "confederacion", "Propietario","gastos"};

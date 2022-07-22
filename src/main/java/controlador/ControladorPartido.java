@@ -5,6 +5,7 @@
 package controlador;
 
 import Servicio.PartidoServicio;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -16,11 +17,16 @@ import modelo.Partido;
  * @author Adrian
  */
 public class ControladorPartido {
-    private final PartidoServicio partidoServicio = new PartidoServicio();
+    private static PartidoServicio partidoServicio;
     private static ControladorEquipo controladorEquipo = new ControladorEquipo();
     //controladorEquipo.listar().get(Integer.valueOf(params[7])
     
-    public Partido crear(String[] params){
+    public ControladorPartido() throws IOException
+    {
+        partidoServicio = new PartidoServicio();
+        
+    }
+    public Partido crear(String[] params) throws IOException{
         Date fecha;
         try {
              var fechaStrings = params[3].split("/");
@@ -30,7 +36,7 @@ public class ControladorPartido {
         }
            
         Partido partido = new Partido(Integer.valueOf(params[6]),fecha, Integer.valueOf(params[0]), params[1], params[2], controladorEquipo.listar().get(Integer.valueOf(params[4])), controladorEquipo.listar().get(Integer.valueOf(params[5])));
-        this.partidoServicio.crear(partido);
+        this.partidoServicio.crear(partido, true);
         return partido;
     }
     
@@ -38,12 +44,12 @@ public class ControladorPartido {
         return this.partidoServicio.buscarPorCodigo(Integer.valueOf(arg));
     }
     
-    public Partido eliminar(String arg)
+    public Partido eliminar(String arg) throws IOException
     {
         return this.partidoServicio.eliminar(Integer.valueOf(arg));
     }
     
-     public Partido modificar(String [] params){
+     public Partido modificar(String [] params) throws IOException{
         var fechaStrings = params[3].split("/");
         Date fecha = new Date(Integer.parseInt(fechaStrings[0]),Integer.parseInt(fechaStrings[1]) , Integer.parseInt(fechaStrings[2]));       
         Partido partidoNuevo = new Partido(Integer.valueOf(params[6]),fecha, Integer.valueOf(params[0]), params[1], params[2], controladorEquipo.listar().get(Integer.valueOf(params[4])), controladorEquipo.listar().get(Integer.valueOf(params[5])));
@@ -52,7 +58,7 @@ public class ControladorPartido {
     }
     
     
-    public List<Partido> listar()
+    public List<Partido> listar() throws IOException
     {
         return this.partidoServicio.listar();
     }
